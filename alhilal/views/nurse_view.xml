@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--Tree Show-->
+    <record id="view_alhilal_nurse_tree" model="ir.ui.view">
+        <field name="name">alhilal.nurse.tree</field>
+        <field name="model">alhilal.nurse</field>
+        <field name="arch" type="xml">
+            <tree sample="1" multi_edit="1">
+                <field name="nurse_id" optional="show"/>
+                <field name="name" optional="show"/>
+                <field name="age" optional="hide"/>
+                <field name="date_of_birth" optional="hide"/>
+                <field name="gender" optional="show"/>
+                <field name="address" optional="hide"/>
+                <field name="phone" optional="show"/>
+                <field name="email" optional="hide"/>
+                <field name="job_title" optional="show"/>
+                <field name="department" optional="show"/>
+                <field name="employment_status" optional="hide"/>
+                <field name="work_experience" optional="hide"/>
+                <field name="salary" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Form Create-->
+    <record id="view_alhilal_nurse_form" model="ir.ui.view">
+        <field name="name">alhilal.nurse.form</field>
+        <field name="model">alhilal.nurse</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_tittle">
+                        <h3>
+                            <field name="nurse_id"/>
+                        </h3>
+                        <h3>
+                            <label for="name" string="Name" class="oe_edit_only"/>
+                            <field name="name" placeholder="Enter nurse's name"/>
+                        </h3>
+                    </div>
+                    <group string="Personal Info">
+                        <group>
+                            <field name="date_of_birth" placeholder="select the date of birth of the nurse"/>
+                            <field name="age" placeholder="Enter Nurse's age"/>
+                            <field name="gender" placeholder="Select Nurse's gender"/>
+                            <field name="address" placeholder="Enter Nurse's address"/>
+                        </group>
+                        <group>
+                            <field name="phone" placeholder="Enter Nurse's phone"/>
+                            <field name="email" placeholder="Enter Nurse's email"/>
+                            <field name="marital_status"/>
+                                <field name="partner_name" attrs="{'invisible': [('marital_status', '=', 'single')],
+                                            'required': [('marital_status', '=', 'married')]}"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Educational Qualifications" name="educational_qualifications">
+                            <group>
+                                 <field name="educational_qualifications" placeholder="Degrees earned, certifications obtained, and other educational qualifications"/>
+                            </group>
+                        </page>
+                        <page string="Performance Evaluations" name="performance_evaluations">
+                            <group>
+                                <field name="performance_evaluations" placeholder="Records of performance evaluations conducted by the hospital or other supervisors"/>
+                            </group>
+                        </page>
+                        <page string="Medical Records" name="medical_records">
+                            <group>
+                                <field name="medical_records" placeholder="Health records of the nurse including immunization records and any medical conditions that may affect their ability to perform their duties"/>
+                            </group>
+                        </page>
+                        <page string="Criminal Background Checks" name="criminal_background_checks">
+                            <group>
+                                <field name="criminal_background_checks" placeholder="Results of criminal background checks conducted on the nurse before employment"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <sheet>
+                    <group string="Professional Info">
+                        <group>
+                            <field name="job_title" placeholder="Enter job tittle"/>
+                            <field name="department" placeholder="select department"/>
+                        </group>
+                        <group>
+                            <field name="employment_status" placeholder="Select employment status"/>
+                            <field name="work_experience" placeholder="Select work experience"/>
+                            <field name="salary"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Training Records" name="training_records">
+                            <group>
+                                <field name="training_records" options="{'collaborative':true, 'resizable':true}" placeholder="Records of training courses attended by the nurse"/>
+                            </group>
+                        </page>
+                        <page string="Disciplinary Actions" name="disciplinary_actions">
+                            <group>
+                                <field name="disciplinary_actions" options="{'collaborative':true, 'resizable':true}" placeholder="Any disciplinary actions taken against the nurse for violating hospital policies or procedures"/>
+                            </group>
+                        </page>
+                        <page string="Professional Licenses and Certifications" name="professional_licenses_and_certifications">
+                            <group>
+                                <field name="professional_licenses_and_certifications" options="{'collaborative':true, 'resizable':true}" placeholder="Records of professional licenses and certifications held by the nurse that are required for their job role in the hospital"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <!--Chatter-->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--ControlPanel-->
+    <record id="view_alhilal_alhilal_nurse" model="ir.ui.view">
+        <field name="name">alhilal.nurse.search</field>
+        <field name="model">alhilal.nurse</field>
+        <field name="arch" type="xml">
+            <search>
+
+            </search>
+        </field>
+    </record>
+
+    <!--Action-->
+    <record id="action_alhilal_nurse" model="ir.actions.act_window">
+        <field name="name">Nurse</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">alhilal.nurse</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first doctor Info !</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_nurse"
+              parent="menu_nurse_root"
+              name="Nurse Details"
+              action="action_alhilal_nurse"
+              sequence="0"/>
+</odoo>

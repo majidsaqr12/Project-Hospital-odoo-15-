@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="menu_alhilal_root"
+              name="AL HILAL"
+              sequence="0"/>
+
+    <menuitem id="menu_doctor_root"
+              name="Doctors"
+              parent="menu_alhilal_root"
+              sequence="0"/>
+
+    <menuitem id="menu_nurse_root"
+              name="Nurses"
+              parent="menu_alhilal_root"
+              sequence="20"/>
+
+    <menuitem id="menu_salary_root"
+              name="Salaries"
+              parent="menu_alhilal_root"
+              sequence="40"/>
+
+    <menuitem id="menu_patient_root"
+              name="Patients"
+              parent="menu_alhilal_root"
+              sequence="60"/>
+
+    <menuitem id="menu_appointment_root"
+              name="Appointments"
+              parent="menu_alhilal_root"
+              sequence="80"/>
+
+    <menuitem id="menu_configuration_root"
+              name="Configurations"
+              parent="menu_alhilal_root"
+              sequence="100"/>
+
+    <menuitem id="menu_cancel_appointment_wizard"
+              parent="menu_appointment_root"
+              name="Cancellation"
+              action="action_cancel_appointment_wizard"
+              sequence="20"/>
+</odoo>

@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access.alhilal.doctor,access_alhilal_doctor,alhilal.model_alhilal_doctor,base.group_user,1,1,1,1
+access.alhilal.salary,access_alhilal_salary,alhilal.model_alhilal_salary,base.group_user,1,1,1,1
+access.alhilal.appointment,access_alhilal_appointment,alhilal.model_alhilal_appointment,base.group_user,1,1,1,1
+access.alhilal.nurse,access_alhilal_nurse,alhilal.model_alhilal_nurse,base.group_user,1,1,1,1
+access.alhilal.patient,access_alhilal_patient,alhilal.model_alhilal_patient,base.group_user,1,1,1,1
+access.appointment.pharmacy.lines,access_appointment_pharmacy_lines,alhilal.model_appointment_pharmacy_lines,base.group_user,1,1,1,1
+access.patient.tag,access_patient_tag,alhilal.model_patient_tag,base.group_user,1,1,1,1
+access.cancel.appointment.wizard,access_cancel_appointment_wizard,alhilal.model_cancel_appointment_wizard,base.group_user,1,1,1,1

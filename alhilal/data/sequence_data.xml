@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--Create Sequence for patient model-->
+    <record id="seq_alhilal_doctor" model="ir.sequence">
+        <field name="name">AL HILAl Doctor</field>
+        <field name="code">alhilal.doctor</field>
+        <field name="prefix">HD</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_alhilal_nurse" model="ir.sequence">
+        <field name="name">AL HILAl Nurse</field>
+        <field name="code">alhilal.nurse</field>
+        <field name="prefix">HN</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_alhilal_patient" model="ir.sequence">
+        <field name="name">AL HILAl PATIENT</field>
+        <field name="code">alhilal.patient</field>
+        <field name="prefix">HP</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_alhilal_appointment" model="ir.sequence">
+        <field name="name">AL HILAl APPOINTMENT</field>
+        <field name="code">alhilal.appointment</field>
+        <field name="prefix">HA</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+</odoo>

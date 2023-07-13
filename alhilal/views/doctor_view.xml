@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--Tree Show-->
+    <record id="view_alhilal_doctor_tree" model="ir.ui.view">
+        <field name="name">alhilal.doctor.tree</field>
+        <field name="model">alhilal.doctor</field>
+        <field name="arch" type="xml">
+            <tree sample="1" multi_edit="1">
+                <field name="doctor_id" optional="show"/>
+                <field name="name" optional="show"/>
+                <field name="age" optional="hide"/>
+                <field name="phone" optional="hide"/>
+                <field name="address" optional="hide"/>
+                <field name="specialty" optional="show"/>
+                <field name="job_title" optional="show"/>
+                <field name="department" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Form Create-->
+    <record id="view_alhilal_doctor_form" model="ir.ui.view">
+        <field name="name">alhilal.doctor.form</field>
+        <field name="model">alhilal.doctor</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_tittle">
+                        <h3>
+                            <field name="doctor_id"/>
+                        </h3>
+                        <h3>
+                            <label for="name" string="Name" class="oe_edit_only"/>
+                            <field name="name" placeholder="Enter doctor's name"/>
+                        </h3>
+                    </div>
+                    <group string="Personal Info">
+                        <group >
+                            <field name="date_of_birth" placeholder="select the date of birth of the doctor"/>
+                            <field name="age"/>
+                            <field name="gender" placeholder="Select Doctor's gender"/>
+                            <field name="address" placeholder="Enter Doctor's address"/>
+                        </group>
+                        <group>
+                            <field name="phone" placeholder="Enter Doctor's phone"/>
+                            <field name="email" placeholder="Enter Doctor's email"/>
+                            <field name="marital_status"/>
+                                <field name="partner_name" attrs="{'invisible': [('marital_status', '=', 'single')],
+                                            'required': [('marital_status', '=', 'married')]}"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook string="Notebook">
+                        <page string="Performance date" name="prescription_date">
+                            <group>
+                                 <field name="performance_date" options="{'collaborative':true, 'resizable':true}" placeholder="The doctor's performance evaluations, patient satisfaction scores, and any disciplinary actions taken against them"/>
+                            </group>
+                        </page>
+                        <page string="Medical records" name="medical_records">
+                            <group>
+                                <field name="medical_records" options="{'collaborative':true, 'resizable':true}" placeholder="Medical records related to the doctor's own health or any medical conditions they may have treated in patients"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <sheet>
+                    <group string="Professional Info">
+                        <group>
+                            <field name="medical_degree" placeholder="Select medical degree"/>
+                            <field name="specialty" placeholder="Select specialty"/>
+                            <field name="job_title" placeholder="Enter job tittle"/>
+                            <field name="department" placeholder="select department"/>
+                        </group>
+                        <group>
+                            <field name="work_experience" placeholder="Select work experience"/>
+                            <field name="employment_status" placeholder="Select employment status"/>
+                            <field name="salary" placeholder="Enter Doctor's salary"/>
+                        </group>
+                    </group>
+                    <notebook string="Notebook">
+                        <page string="Training Records" name="training_records">
+                            <group>
+                                 <field name="training_records" placeholder="Records of any training or continuing education courses the doctor has completed"/>
+                            </group>
+                        </page>
+                        <page string="Research/Publications" name="research_publications">
+                            <group>
+                                <field name="research_publications" placeholder="Any research studies or publications authored by the doctor"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <!--Chatter-->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--ControlPanel-->
+    <record id="view_alhilal_doctor_search" model="ir.ui.view">
+        <field name="name">alhilal.doctor.search</field>
+        <field name="model">alhilal.doctor</field>
+        <field name="arch" type="xml">
+            <search>
+                <!--Search-->
+                <field name="name" string="Doctor Name" filter_domain="['|',('name','ilike',self),('id','ilike',self)]"/>
+                <field name="id" string="Doctor Age"/>
+                <!--Filter-->
+                <filter name="filter_specialty" string="Specialty anesthesiology" domain="[('specialty', '=', 'anesthesiology')]"/>
+                <filter name="filter_specialty" string="Specialty cardiology" domain="[('specialty', '=', 'cardiology')]"/>
+                <filter name="filter_specialty" string="Specialty dermatology" domain="[('specialty', '=', 'dermatology')]"/>
+                <filter name="filter_specialty" string="Specialty emergency medicine" domain="[('specialty', '=', 'emergency medicine')]"/>
+                <filter name="filter_specialty" string="Specialty endocrinology" domain="[('specialty', '=', 'endocrinology')]"/>
+                <filter name="filter_specialty" string="Specialty gastroenterology" domain="[('specialty', '=', 'gastroenterology')]"/>
+                <separator/>
+                <filter name="filter_male" string="Male" domain="[('gender', '=', 'male')]"/>
+                <filter name="filter_female" string="Female" domain="[('gender', '=', 'female')]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                <!--Group-->
+                <group expand="0" string="Group By">
+                    <filter string="Specialty" name="group_by_specialty" context="{'group_by':'specialty'}"/>
+                    <filter string="Department" name="group_by_department" context="{'group_by':'department'}"/>
+                    <filter string="Medical Degree" name="group_by_medical_degree" context="{'group_by':'medical_degree'}"/>
+                    <filter string="Employment Status" name="group_by_employment_status" context="{'group_by':'employment_status'}"/>
+                    <separator/>
+                    <filter string="Gender" name="group_by_gender" context="{'group_by':'gender'}"/>
+                    <separator/>
+                    <filter string="Age" name="group_by_age" context="{'group_by':'age'}"/>
+                </group>
+                <!--Search Panel-->
+                <searchpanel>
+                    <field name="gender" string="Gender" enable_counters= "1"  select="multi"/>
+                    <field name="specialty" string="Specialty" enable_counters= "1"  select="multi"/>
+                    <field name="medical_degree" string="Medical Degree" enable_counters= "1"  select="multi"/>
+                    <field name="employment_status" string="Employment Status" enable_counters= "1"  select="multi"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <!--Action-->
+    <record id="action_alhilal_doctor" model="ir.actions.act_window">
+        <field name="name">Doctor</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">alhilal.doctor</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first doctor Info !</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_doctor"
+              parent="menu_doctor_root"
+              name="Doctor Details"
+              action="action_alhilal_doctor"
+              sequence="0"/>
+</odoo>

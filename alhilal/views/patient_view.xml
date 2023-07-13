@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--Tree Show-->
+    <record id="view_alhilal_patient_tree" model="ir.ui.view">
+        <field name="name">alhilal.patient.tree</field>
+        <field name="model">alhilal.patient</field>
+        <field name="arch" type="xml">
+            <tree sample="1" multi_edit="1">
+                <field name="patient_id" optional="show"/>
+                <field name="name" string="Patient Name" optional="show"/>
+                <field name="gender" string="Patient Gender" optional="show"/>
+                <field name="date_of_birth" optional="hide"/>
+                <field name="age" string="Patient Age" optional="hide"/>
+                <field name="phone" string="Patient Phone" optional="show"/>
+                <field name="address" string="Patient Address" optional="hide"/>
+                <field name="social_security_number" optional="show"/>
+                <field name="charge_dr" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Form Create-->
+    <record id="view_alhilal_patient_form" model="ir.ui.view">
+        <field name="name">alhilal.patient.form</field>
+        <field name="model">alhilal.patient</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_tittle">
+                        <h3>
+                            <field name="patient_id"/>
+                        </h3>
+                        <h3>
+                            <label for="name" string="Name" class="oe_edit_only"/>
+                            <field name="name" placeholder="Enter patient's name"/>
+                        </h3>
+                    </div>
+                    <group string="Personal Info">
+                        <group>
+                            <field name="date_of_birth" placeholder="select the date of birth of the patient"/>
+                            <field name="age"/>
+                            <field name="appointment_count"/>
+                            <field name="gender" placeholder="Select patient's gender"/>
+                            <field name="address" placeholder="Enter patient's address"/>
+                        </group>
+                        <group>
+                            <field name="phone" placeholder="Enter patient's phone"/>
+                            <field name="social_security_number" placeholder="Enter patient's Social security"/>
+                            <field name="tags_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                            <field name="charge_dr" placeholder="Select charge of patient/doctor"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <sheet>
+                    <group>
+                        <group string="Vital Signs">
+                            <field name="blood_pressure"/>
+                            <field name="heart_rate"/>
+                            <field name="respiratory_rate"/>
+                        </group>
+                        <group string="Other Information" name="other_info">
+                                <field name="parent" attrs="{'invisible': ['|', ('age', '>=', 18), ('gender', '=', 'male')]}"/>
+                                <field name="marital_status" attrs="{'invisible': [('age', '&lt;=', 18)]}"/>
+                                <field name="partner_name" attrs="{'readonly': [('marital_status', '!=', 'married')], 'invisible': ['|', ('age', '&lt;=', 18), ('marital_status', '=', 'single')],
+                                            'required': [('marital_status', '=', 'married')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Medical History" name="medical_history">
+                            <group>
+                                 <field name="medical_history" options="{'collaborative':true, 'resizable':true}" placeholder="Previous illnesses, surgeries, allergies, medications takenPrevious illnesses, surgeries, allergies, medications taken"/>
+                            </group>
+                        </page>
+                        <page string="Diagnosis/Treatment Plan" name="diagnosis_and_treatment_plan">
+                            <group>
+                                 <field name="diagnosis_and_treatment_plan" options="{'collaborative':true, 'resizable':true}" placeholder="The diagnosis of the patient's condition and the treatment plan prescribed by the doctor"/>
+                            </group>
+                        </page>
+                        <page string="Progress Notes" name="progress_notes">
+                            <group>
+                                 <field name="progress_notes" options="{'collaborative':true, 'resizable':true}" placeholder="The progress of the patient's condition during their stay in the hospital"/>
+                            </group>
+                        </page>
+                        <page string="Nursing Notes" name="nursing_notes">
+                            <group>
+                                 <field name="nursing_notes" options="{'collaborative':true, 'resizable':true}" placeholder="The observations and care provided by the nursing staff"/>
+                            </group>
+                        </page>
+                        <page string="Physician Orders" name="physician_orders">
+                            <group>
+                                 <field name="physician_orders" options="{'collaborative':true, 'resizable':true}" placeholder="Orders for medications and treatments prescribed by the physician"/>
+                            </group>
+                        </page>
+                        <page string="Discharge Summary" name="discharge_summary">
+                            <group>
+                                 <field name="discharge_summary" options="{'collaborative':true, 'resizable':true}" placeholder="A summary of the patient's stay in the hospital and instructions for follow-up care after discharge"/>
+                            </group>
+                        </page>
+                        <page string="Insurance Info" name="insurance_info">
+                            <group>
+                                 <field name="insurance_info" options="{'collaborative':true, 'resizable':true}" placeholder="Information about the patient's insurance coverage and billing details"/>
+                            </group>
+                        </page>
+                        <page string="Appointment" name="create_appointment">
+                            <group>
+                                <field name="appointment_ids">
+                                    <tree>
+                                        <field name="patient_id"/>
+                                        <field name="appointment_time"/>
+                                        <field name="booking_date"/>
+                                        <field name="doctor_id"/>
+                                    </tree>
+                                    <form>
+                                        <group>
+                                            <field name="patient_id"/>
+                                            <field name="appointment_time"/>
+                                            <field name="booking_date"/>
+                                            <field name="doctor_id"/>
+                                        </group>
+                                    </form>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <!--Chatter-->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--ControlPanel-->
+    <record id="view_alhilal_patient_search" model="ir.ui.view">
+        <field name="name">alhilal.patient.search</field>
+        <field name="model">alhilal.patient</field>
+        <field name="arch" type="xml">
+            <search>
+                <!--Search-->
+                <field name="name" string="Patient Name" filter_domain="['|',('name','ilike',self),('age','ilike',self)]"/>
+                <field name="age" string="Patient Age"/>
+                <!--Filter-->
+                <filter name="filter_male" string="Male" domain="[('gender', '=', 'male')]"/>
+                <filter name="filter_female" string="Female" domain="[('gender', '=', 'female')]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                <!--Group-->
+                <group expand="0" string="Group By">
+                    <filter string="Gender" name="group_by_gender" context="{'group_by':'gender'}"/>
+                    <separator/>
+                    <filter string="Age" name="group_by_age" context="{'group_by':'age'}"/>
+                </group>
+                <!--Search Panel-->
+                <searchpanel>
+                    <field name="gender" string="Gender" enable_counters= "1" icon="fa-users" select="multi"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <!--Action-->
+    <record id="action_alhilal_patient" model="ir.actions.act_window">
+        <field name="name">Patient</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">alhilal.patient</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_filter_male':0, 'search_default_group_by_gender':0}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first patient !</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_patient"
+              parent="menu_patient_root"
+              name="Patient"
+              action="action_alhilal_patient"
+              sequence="0"/>
+</odoo>
